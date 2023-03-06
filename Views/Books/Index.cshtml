@@ -9,6 +9,14 @@
 <p>
     <a asp-action="Create"class="btn btn-lg btn-primary">Create New</a>
 </p>
+<li class="nav-item">
+    <form asp-controller="Books" asp-action="Index" class="nav-link">
+        <p style="margin:0;">
+            <input type="text" name="search" placeholder="">
+            <input type="submit" value="Search">
+        </p>
+    </form>
+</li>
 <style>
     table{
     border:1px solid black;

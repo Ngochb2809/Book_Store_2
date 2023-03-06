@@ -19,12 +19,23 @@ namespace Book_Store.Controllers
         {
             _context = context;
         }
-        
-
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string search)
         {
-              return View(await _context.Book.ToListAsync());
+
+            var books = from m in _context.Book select m;
+            if (!string.IsNullOrEmpty(search))
+            {
+                books = books.Where(s => s.Name.Contains(search));
+            }
+            /*var _book = getAllBook();
+            ViewBag.book = _book;*/
+            return View(await books.ToListAsync());
         }
+
+        //public async Task<IActionResult> Index()
+        //{
+        //      return View(await _context.Book.ToListAsync());
+        //}
         
      
         public async Task<IActionResult> Details(int? id)

@@ -3,6 +3,26 @@
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@using Newtonsoft.Json
+@{
+    var data = Context.Session.GetString("cart");
+    int coutCart = 0;
+    if (data == null)
+    {
+        coutCart = 0;
+    }
+    else
+    {
+        var data2 = Context.Session.GetString("cart");
+        List<Cart> dataCart = JsonConvert.DeserializeObject<List<Cart>>(data2);
+        foreach (var item in dataCart)
+        {
+            coutCart += item.Quantity;
+        }
+
+    }
+
+}
 <style>
     body{margin-top:20px;}
 
@@ -628,7 +648,7 @@
     <img class="giohang" src="https://media.istockphoto.com/id/639811872/vi/vec-to/bi%E1%BB%83u-t%C6%B0%E1%BB%A3ng-gi%E1%BB%8F-h%C3%A0ng.jpg?s=170667a&w=0&k=20&c=-x6Ppwru9ZmRNHRQqEBjA2RR4sow8hhy21OFmA8Vxr0=" style="width: 90px !important;
         height: 75px;
         display: inline-block;"
-         align="right" />
+          />@coutCart
 </a>
 
 @if (User.IsInRole("Admin"))

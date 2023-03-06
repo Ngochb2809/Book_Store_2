@@ -103,8 +103,15 @@ namespace Book_Store.Areas.Identity.Pages.Account
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
-            returnUrl ??= Url.Content("~/");
-
+            //if (User.IsInRole("Admin"))
+            //{
+            //    returnUrl ??= Url.Content("~/Books");
+            //    return RedirectToPage("./Books");
+            //}
+            //else
+            //{
+                returnUrl ??= Url.Content("~/Cart");
+            //}
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
 
             if (ModelState.IsValid)

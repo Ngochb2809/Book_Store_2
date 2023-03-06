@@ -27,36 +27,26 @@ namespace Book_Store.Controllers
             this._userManager = userManager;
         }
         [Authorize]
-        //public async Task<IActionResult> Index(string search)
-        //{
+       // [Authorize(Roles = "User")]
 
-        //    var books = from m in _context.Book select m;
-        //    if (!string.IsNullOrEmpty(search))
-        //    {
-        //        books = books.Where(s => s.Name.Contains(search));
-        //    }
-        //    /*var _book = getAllBook();
-        //    ViewBag.book = _book;*/
-        //    return View(await books.ToListAsync());
-        //}
         public IActionResult Index()
         {
             var _book = getAllBook();
             ViewBag.book = _book;
             return View();
         }
-
+        //[Authorize(Roles = "User")]
         public List<Book> getAllBook()
         {
             return _db.Book.ToList();
         }
-        
+       // [Authorize(Roles = "User")]
         public Book getDetailBook(int id)
         {
             var book = _db.Book.Find(id);
             return book;
         }
-        
+        [Authorize(Roles = "User")]
         public IActionResult addCart(int id)
         {
             var cart = HttpContext.Session.GetString("cart");//get key cart
@@ -102,7 +92,7 @@ namespace Book_Store.Controllers
             return RedirectToAction(nameof(Index));
 
         }
-        [Authorize]
+        [Authorize(Roles = "User")]
         public IActionResult ListCart()
         {
             var cart = HttpContext.Session.GetString("cart");//get key cart
@@ -117,7 +107,7 @@ namespace Book_Store.Controllers
             }
             return RedirectToAction(nameof(Index));
         }
-        
+        [Authorize(Roles = "User")]
         [HttpPost]
         public IActionResult updateCart(int id, int quantity)
         {
@@ -144,7 +134,7 @@ namespace Book_Store.Controllers
             return BadRequest();
 
         }
-        
+        [Authorize(Roles = "User")]
         public IActionResult deleteCart(int id)
         {
             var cart = HttpContext.Session.GetString("cart");
@@ -164,6 +154,7 @@ namespace Book_Store.Controllers
             }
             return RedirectToAction(nameof(Index));
         }
+        [Authorize(Roles = "User")]
         public async Task<ActionResult> CheckOut()
         {
             
@@ -205,6 +196,7 @@ namespace Book_Store.Controllers
             }
             return RedirectToAction(nameof(Index));
         }
+ 
         public async Task<IActionResult> OrderList(int? id)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
